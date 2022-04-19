@@ -5,6 +5,8 @@ import { AuthCredentialsDto } from "./dto/auth-credentials.dto";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { JwtPayload } from "./jwt-payload.interface";
+import { RegisterDto } from "./dto/register.dto";
+import { LoginResponseDto } from "./dto/login-response.dto";
 
 @Injectable()
 export class AuthService {
@@ -14,20 +16,26 @@ export class AuthService {
     private jwtService: JwtService) {
   }
 
-  async signUp(credentialsDto: AuthCredentialsDto): Promise<void> {
-    return await this.userRepository.createUser(credentialsDto)
+  async signUp(registerDto: RegisterDto): Promise<void> {
+    return await this.userRepository.createUser(registerDto)
   }
 
-  async signIn(credentialsDto: AuthCredentialsDto): Promise<{ accessToken: string }> {
-    const { username, password } = credentialsDto;
-    const user = await this.userRepository.findOne({ username });
+  async signIn(credentialsDto: AuthCredentialsDto): Promise<LoginResponseDto> {
+    const { email, password } = credentialsDto;
+    const user = await this.userRepository.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload: JwtPayload = {username};
+      const payload: JwtPayload = {email};
       const accessToken = this.jwtService.sign(payload);
-      return {accessToken}
+      return new LoginResponseDto(
+        accessToken,
+        [user.role],
+        user.accountType,
+        user.name
+      )
     } else {
       throw new UnauthorizedException("Please check your login credentials");
     }
+    return null;
   }
 }
