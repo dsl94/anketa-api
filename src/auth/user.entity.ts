@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { AccountTypeEnum } from "./account-type.enum";
 import { RoleEnum } from "./role.enum";
+import { Token } from "./token.entity";
 
 @Entity()
 export class User {
@@ -14,6 +15,8 @@ export class User {
   accountType: AccountTypeEnum
   @Column()
   role: RoleEnum
+  @OneToMany(() => Token, token => token.user)
+  tokens: Token[]
   @Column()
   password: string;
   @CreateDateColumn()

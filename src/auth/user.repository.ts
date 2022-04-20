@@ -8,7 +8,7 @@ import { RoleEnum } from "./role.enum";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async createUser(registerDto: RegisterDto): Promise<void> {
+  async createUser(registerDto: RegisterDto): Promise<User> {
     const { email, password, name, accountType } = registerDto;
 
     const salt = await bcrypt.genSalt();
@@ -33,5 +33,15 @@ export class UserRepository extends Repository<User> {
       }
     }
 
+    return user;
+  }
+
+  async updatePassword(user: User, newPassword: string): Promise<void>{
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+     user.password = hashedPassword;
+
+     await this.save(user);
   }
 }
