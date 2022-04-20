@@ -62,6 +62,7 @@ export class AuthService {
       if (tokenEntity.expire >= new Date()) {
         const user = tokenEntity.user;
         await this.userRepository.updatePassword(user, newPassword);
+        await this.tokenRepository.remove(tokenEntity);
       } else {
         throw new BadRequestException("Token has expired");
       }
