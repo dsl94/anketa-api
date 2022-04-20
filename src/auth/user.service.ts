@@ -13,6 +13,7 @@ import { ForgotPasswordDto } from "./dto/forgot-password.dto";
 import { ChangePasswordDto } from "./dto/change-password.dto";
 import { ProfileDto } from "./dto/profile.dto";
 import { User } from "./user.entity";
+import { ProfileUpdateDto } from "./dto/profile-update.dto";
 
 @Injectable()
 export class UserService {
@@ -29,5 +30,13 @@ export class UserService {
       user.accountType,
       user.role
     );
+  }
+
+  async updateProfile(user: User, profileDto: ProfileUpdateDto): Promise<void> {
+    user.name = profileDto.name;
+    user.email = profileDto.email;
+    user.accountType = profileDto.accountType;
+
+    await this.userRepository.save(user);
   }
 }

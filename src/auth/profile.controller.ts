@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put, Req, UseGuards } from "@nestjs/common";
 import { RegisterDto } from "./dto/register.dto";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "@nestjs/passport";
@@ -10,6 +10,7 @@ import { GetUser } from "./get-user.decorator";
 import { User } from "./user.entity";
 import { ProfileDto } from "./dto/profile.dto";
 import { UserService } from "./user.service";
+import { ProfileUpdateDto } from "./dto/profile-update.dto";
 
 @Controller('profile')
 export class ProfileController {
@@ -21,5 +22,11 @@ export class ProfileController {
   @UseGuards(AuthGuard())
   getProfile(@GetUser() user: User): Promise<ProfileDto> {
     return this.userService.getProfile(user);
+  }
+
+  @Put()
+  @UseGuards(AuthGuard())
+  updateProfile(@GetUser() user: User, @Body() profileDto: ProfileUpdateDto): Promise<void> {
+    return this.userService.updateProfile(user, profileDto);
   }
 }
