@@ -9,6 +9,8 @@ import { JwtStrategy } from "./jwt.strategy";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MailModule } from "../mail/mail.module";
 import { TokenRepository } from "./token.repository";
+import { UserService } from "./user.service";
+import { ProfileController } from "./profile.controller";
 
 @Module({
   imports: [
@@ -29,8 +31,8 @@ import { TokenRepository } from "./token.repository";
     MailModule,
     TypeOrmModule.forFeature([UserRepository, TokenRepository]),
   ],
-  providers: [AuthService, JwtStrategy],
-  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy, UserService],
+  controllers: [AuthController, ProfileController],
   exports: [JwtStrategy, PassportModule]
 })
 export class AuthModule {}
