@@ -11,22 +11,27 @@ import { User } from "./user.entity";
 import { ProfileDto } from "./dto/profile.dto";
 import { UserService } from "./user.service";
 import { ProfileUpdateDto } from "./dto/profile-update.dto";
+import { ChangeProfilePasswordDto } from "./dto/change-profile-password.dto";
 
 @Controller('profile')
+@UseGuards(AuthGuard())
 export class ProfileController {
 
   constructor(private userService: UserService) {
   }
 
   @Get()
-  @UseGuards(AuthGuard())
   getProfile(@GetUser() user: User): Promise<ProfileDto> {
     return this.userService.getProfile(user);
   }
 
   @Put()
-  @UseGuards(AuthGuard())
   updateProfile(@GetUser() user: User, @Body() profileDto: ProfileUpdateDto): Promise<void> {
     return this.userService.updateProfile(user, profileDto);
+  }
+
+  @Put('/change-password')
+  changePassword(@GetUser() user: User, @Body() dto: ChangeProfilePasswordDto): Promise<void> {
+    return this.userService.changePassword(user, dto);
   }
 }

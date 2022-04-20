@@ -14,6 +14,7 @@ import { ChangePasswordDto } from "./dto/change-password.dto";
 import { ProfileDto } from "./dto/profile.dto";
 import { User } from "./user.entity";
 import { ProfileUpdateDto } from "./dto/profile-update.dto";
+import { ChangeProfilePasswordDto } from "./dto/change-profile-password.dto";
 
 @Injectable()
 export class UserService {
@@ -38,5 +39,18 @@ export class UserService {
     user.accountType = profileDto.accountType;
 
     await this.userRepository.save(user);
+  }
+
+  async changePassword(user: User, dto: ChangeProfilePasswordDto): Promise<void> {
+    const {currentPassword, newPassword, repeatPassword} = dto;
+    // validation
+    if (!await bcrypt.compare(currentPassword, user.password)) {
+      throw new BadRequestException("Current password is not correct")
+    }
+    if (newPassword !== repeatPassword) {
+      throw new BadRequestException("New and repeat password must match")
+    }
+
+    await this.userRepository.updatePassword(user, newPassword);
   }
 }
