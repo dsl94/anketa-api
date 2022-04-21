@@ -24,13 +24,25 @@ export class UserService {
   }
 
   async getProfile(user: User): Promise<ProfileDto> {
-    return new ProfileDto(
-      user.id,
-      user.email,
-      user.name,
-      user.accountType,
-      user.role
-    );
+    return this.mapUserToProfileDto(user);
+  }
+
+  async getAllUsers(): Promise<ProfileDto[]> {
+    let users = await this.userRepository.find();
+    let res: ProfileDto[] = [];
+    users.forEach(user => {
+      res.push(this.mapUserToProfileDto(user));
+    })
+    return res;
+  }
+
+  async getUserById(id: string): Promise<ProfileDto> {
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    return this.mapUserToProfileDto(user);
   }
 
   async updateProfile(user: User, profileDto: ProfileUpdateDto): Promise<void> {
@@ -52,5 +64,15 @@ export class UserService {
     }
 
     await this.userRepository.updatePassword(user, newPassword);
+  }
+
+  private mapUserToProfileDto(user: User): ProfileDto {
+    return new ProfileDto(
+      user.id,
+      user.email,
+      user.name,
+      user.accountType,
+      user.role
+    );
   }
 }

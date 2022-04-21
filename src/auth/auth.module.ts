@@ -11,6 +11,7 @@ import { MailModule } from "../mail/mail.module";
 import { TokenRepository } from "./token.repository";
 import { UserService } from "./user.service";
 import { ProfileController } from "./profile.controller";
+import { UserController } from "./user.controller";
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { ProfileController } from "./profile.controller";
     TypeOrmModule.forFeature([UserRepository, TokenRepository]),
   ],
   providers: [AuthService, JwtStrategy, UserService],
-  controllers: [AuthController, ProfileController],
+  controllers: [AuthController, ProfileController, UserController],
   exports: [JwtStrategy, PassportModule]
 })
 export class AuthModule {}
