@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Up
 import { AccountTypeEnum } from "./account-type.enum";
 import { RoleEnum } from "./role.enum";
 import { Token } from "./token.entity";
+import { Project } from "../project/project.entity";
 
 @Entity()
 export class User {
@@ -17,6 +18,8 @@ export class User {
   role: RoleEnum
   @OneToMany(() => Token, token => token.user)
   tokens: Token[]
+  @OneToMany(() => Project, project => project.owner)
+  ownProjects: Project[]
   @Column()
   password: string;
   @CreateDateColumn()

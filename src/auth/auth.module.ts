@@ -12,6 +12,7 @@ import { TokenRepository } from "./token.repository";
 import { UserService } from "./user.service";
 import { ProfileController } from "./profile.controller";
 import { UserController } from "./user.controller";
+import { GetUser } from "./get-user.decorator";
 
 @Module({
   imports: [
