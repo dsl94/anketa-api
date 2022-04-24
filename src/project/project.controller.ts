@@ -1,10 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { AuthGuard } from "@nestjs/passport";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { GetUser } from "../auth/get-user.decorator";
 import { User } from "../auth/user.entity";
 import { ProjectResponseDto } from "./dto/project-response.dto";
+import RoleGuard from "../auth/role.guard";
+import { RoleEnum } from "../auth/role.enum";
+import { ProfileDto } from "../auth/dto/profile.dto";
 
 @Controller('projects')
 @UseGuards(AuthGuard())
@@ -21,5 +24,10 @@ export class ProjectController {
   @Get()
   getAllByUser(@GetUser() user: User): Promise<ProjectResponseDto[]> {
     return this.projectService.getAllByUser(user);
+  }
+
+  @Get('/:id')
+  getById(@Param('id') id: string): Promise<ProjectResponseDto> {
+    return this.projectService.getById(id);
   }
 }

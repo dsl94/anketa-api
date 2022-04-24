@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ProjectRepository } from "./project.repository";
 import { Project } from "./project.entity";
@@ -17,6 +17,15 @@ export class ProjectService {
 
   async createProject(createDto: CreateProjectDto, user: User):Promise<void> {
     return await this.projectRepository.createProject(createDto, user);
+  }
+
+  async getById(id: string): Promise<ProjectResponseDto> {
+    const project = await this.projectRepository.findOne(id);
+    if (!project) {
+      throw new NotFoundException("Project not found");
+    }
+
+    return this.mapToProjectResponse(project);
   }
 
   async getAllByUser(user: User): Promise<ProjectResponseDto[]> {
