@@ -37,6 +37,10 @@ export class ProjectService {
     return res;
   }
 
+  async deleteProject(id: string) {
+    await this.projectRepository.delete({id});
+  }
+
   private mapToProjectResponse(project: Project): ProjectResponseDto {
     return new ProjectResponseDto(
      project.id,

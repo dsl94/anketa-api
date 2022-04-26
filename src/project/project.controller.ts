@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { AuthGuard } from "@nestjs/passport";
 import { CreateProjectDto } from "./dto/create-project.dto";
@@ -29,5 +29,10 @@ export class ProjectController {
   @Get('/:id')
   getById(@Param('id') id: string): Promise<ProjectResponseDto> {
     return this.projectService.getById(id);
+  }
+
+  @Delete('/:id')
+  deleteById(@Param('id') id: string): Promise<void> {
+    return this.projectService.deleteProject(id);
   }
 }
