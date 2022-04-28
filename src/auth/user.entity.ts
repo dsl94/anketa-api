@@ -26,4 +26,6 @@ export class User {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+  @Column({nullable: true})
+  lastLoginDate: string;
 }

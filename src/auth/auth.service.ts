@@ -35,6 +35,8 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = {email};
       const accessToken = this.jwtService.sign(payload);
+      user.lastLoginDate = new Date().toISOString();
+      await this.userRepository.save(user);
       return new LoginResponseDto(
         accessToken,
         [user.role],
