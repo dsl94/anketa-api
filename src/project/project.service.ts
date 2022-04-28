@@ -50,6 +50,7 @@ export class ProjectService {
      project.startDate,
      project.endDate,
      project.createdAt,
+      project.repositoryFields
     );
   }
 }

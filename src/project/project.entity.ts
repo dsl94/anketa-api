@@ -11,6 +11,7 @@ import { AccountTypeEnum } from "../auth/account-type.enum";
 import { RoleEnum } from "../auth/role.enum";
 import { Token } from "../auth/token.entity";
 import { User } from "../auth/user.entity";
+import { RepositoryFieldEntity } from "./sub-entity/repository-field.entity";
 
 @Entity()
 export class Project {
@@ -32,4 +33,8 @@ export class Project {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+
+  // fields
+  @Column({type: 'jsonb', nullable: true})
+  repositoryFields: RepositoryFieldEntity[];
 }
