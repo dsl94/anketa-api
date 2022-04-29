@@ -7,11 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from "typeorm";
-import { AccountTypeEnum } from "../auth/account-type.enum";
-import { RoleEnum } from "../auth/role.enum";
-import { Token } from "../auth/token.entity";
 import { User } from "../auth/user.entity";
 import { RepositoryFieldEntity } from "./sub-entity/repository-field.entity";
+import { ProjectMemberEntity } from "./sub-entity/project-member.entity";
 
 @Entity()
 export class Project {
@@ -37,4 +35,6 @@ export class Project {
   // fields
   @Column({type: 'jsonb', nullable: true})
   repositoryFields: RepositoryFieldEntity[];
+  @Column({type: 'jsonb', nullable: true})
+  team: ProjectMemberEntity[];
 }

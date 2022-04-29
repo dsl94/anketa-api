@@ -7,7 +7,7 @@ import { User } from "../auth/user.entity";
 @EntityRepository(Project)
 export class ProjectRepository extends Repository<Project> {
   async createProject(createDto: CreateProjectDto, user: User): Promise<void> {
-    const { name, description, inProgress, startDate, endDate, repositoryFields } = createDto;
+    const { name, description, inProgress, startDate, endDate, repositoryFields, team } = createDto;
 
     const project = this.create({
       name,
@@ -16,7 +16,8 @@ export class ProjectRepository extends Repository<Project> {
       startDate,
       endDate,
       owner: user,
-      repositoryFields
+      repositoryFields,
+      team
     });
 
     try {

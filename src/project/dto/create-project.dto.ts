@@ -1,6 +1,7 @@
 import { IsBoolean, IsDate, IsOptional, IsString, MinLength } from "class-validator";
 import { Type } from "class-transformer";
 import { RepositoryFieldEntity } from "../sub-entity/repository-field.entity";
+import { ProjectMemberEntity } from "../sub-entity/project-member.entity";
 
 export class CreateProjectDto {
   @IsString()
@@ -17,4 +18,5 @@ export class CreateProjectDto {
   @IsDate()
   endDate: Date;
   repositoryFields: RepositoryFieldEntity[]
+  team: ProjectMemberEntity[]
 }
