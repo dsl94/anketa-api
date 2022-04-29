@@ -19,6 +19,10 @@ export class ProjectService {
     return await this.projectRepository.createProject(createDto, user);
   }
 
+  async updateProject(id: string, createDto: CreateProjectDto, user: User):Promise<void> {
+    return await this.projectRepository.updateProject(id, createDto, user);
+  }
+
   async getById(id: string): Promise<ProjectResponseDto> {
     const project = await this.projectRepository.findOne(id);
     if (!project) {
