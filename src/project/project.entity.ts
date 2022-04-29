@@ -10,6 +10,7 @@ import {
 import { User } from "../auth/user.entity";
 import { RepositoryFieldEntity } from "./sub-entity/repository-field.entity";
 import { ProjectMemberEntity } from "./sub-entity/project-member.entity";
+import { ProjectTboardEntity } from "./sub-entity/project-tboard.entity";
 
 @Entity()
 export class Project {
@@ -37,4 +38,7 @@ export class Project {
   repositoryFields: RepositoryFieldEntity[];
   @Column({type: 'jsonb', nullable: true})
   team: ProjectMemberEntity[];
+  @Column({ type: 'jsonb', nullable: true })
+  taskBoardLinks: ProjectTboardEntity[];
+
 }
