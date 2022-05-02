@@ -15,34 +15,40 @@ import { ProfileDto } from "./dto/profile.dto";
 import { User } from "./user.entity";
 import { ProfileUpdateDto } from "./dto/profile-update.dto";
 import { ChangeProfilePasswordDto } from "./dto/change-profile-password.dto";
+import { AdminUserResponseDto } from "./dto/admin-user-response.dto";
+import { ProjectRepository } from "../project/project.repository";
 
 @Injectable()
 export class UserService {
 
   constructor(
-    @InjectRepository(UserRepository) private userRepository: UserRepository) {
+    @InjectRepository(UserRepository) private userRepository: UserRepository,
+    @InjectRepository(ProjectRepository) private projectRepository: ProjectRepository
+    ) {
   }
 
   async getProfile(user: User): Promise<ProfileDto> {
     return this.mapUserToProfileDto(user);
   }
 
-  async getAllUsers(): Promise<ProfileDto[]> {
+  async getAllUsers(): Promise<AdminUserResponseDto[]> {
     let users = await this.userRepository.find();
-    let res: ProfileDto[] = [];
-    users.forEach(user => {
-      res.push(this.mapUserToProfileDto(user));
-    })
+    let res: AdminUserResponseDto[] = [];
+    for (const user of users) {
+      const projectNumber = await this.projectRepository.count({owner: user});
+      res.push(this.mapToAdminResponse(user, projectNumber));
+    }
     return res;
   }
 
-  async getUserById(id: string): Promise<ProfileDto> {
+  async getUserById(id: string): Promise<AdminUserResponseDto> {
     const user = await this.userRepository.findOne(id);
+    const projectNumber = await this.projectRepository.count({owner: user})
     if (!user) {
       throw new NotFoundException("User not found");
     }
 
-    return this.mapUserToProfileDto(user);
+    return this.mapToAdminResponse(user, projectNumber);
   }
 
   async updateProfile(user: User, profileDto: ProfileUpdateDto): Promise<void> {
@@ -73,6 +79,17 @@ export class UserService {
       user.name,
       user.accountType,
       user.role
+    );
+  }
+
+  private mapToAdminResponse(user: User, projectNumber: number): AdminUserResponseDto {
+    return new AdminUserResponseDto(
+      user.id,
+      user.email,
+      user.name,
+      user.accountType,
+      user.role,
+      projectNumber
     );
   }
 }

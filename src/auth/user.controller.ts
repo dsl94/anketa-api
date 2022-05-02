@@ -8,6 +8,7 @@ import { ProfileUpdateDto } from "./dto/profile-update.dto";
 import { ChangeProfilePasswordDto } from "./dto/change-profile-password.dto";
 import RoleGuard from "./role.guard";
 import { RoleEnum } from "./role.enum";
+import { AdminUserResponseDto } from "./dto/admin-user-response.dto";
 
 @Controller('users')
 @UseGuards(AuthGuard())
@@ -18,13 +19,13 @@ export class UserController {
 
   @Get()
   @UseGuards(RoleGuard(RoleEnum.ADMIN))
-  getAllUsers(): Promise<ProfileDto[]> {
+  getAllUsers(): Promise<AdminUserResponseDto[]> {
     return this.userService.getAllUsers();
   }
 
   @Get('/:id')
   @UseGuards(RoleGuard(RoleEnum.ADMIN))
-  getUser(@Param('id') id: string): Promise<ProfileDto> {
+  getUser(@Param('id') id: string): Promise<AdminUserResponseDto> {
     return this.userService.getUserById(id);
   }
 }
