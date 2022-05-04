@@ -4,6 +4,7 @@ import { RepositoryFieldEntity } from "../sub-entity/repository-field.entity";
 import { ProjectMemberEntity } from "../sub-entity/project-member.entity";
 import { ProjectTboardEntity } from "../sub-entity/project-tboard.entity";
 import { DocumentLinkFieldEntity } from "../sub-entity/document-link-field.entity";
+import { CustomFieldEntity } from "../sub-entity/custom-field.entity";
 
 export class CreateProjectDto {
   @IsString()
@@ -23,4 +24,5 @@ export class CreateProjectDto {
   team: ProjectMemberEntity[];
   taskBoardLinks: ProjectTboardEntity[];
   documentLinks: DocumentLinkFieldEntity[];
+  customFields: CustomFieldEntity[];
 }

@@ -3,6 +3,7 @@ import { ProjectMemberEntity } from "../sub-entity/project-member.entity";
 import { ProjectTboardEntity } from "../sub-entity/project-tboard.entity";
 import { DocumentLinkFieldEntity } from "../sub-entity/document-link-field.entity";
 import { doc } from "prettier";
+import { CustomFieldEntity } from "../sub-entity/custom-field.entity";
 
 export class ProjectResponseDto {
   id: string;
@@ -16,8 +17,9 @@ export class ProjectResponseDto {
   team: ProjectMemberEntity[];
   taskBoardLinks: ProjectTboardEntity[];
   documentLinks: DocumentLinkFieldEntity[];
+  customFields: CustomFieldEntity[];
 
-  constructor(id: string, name: string, description: string, inProgress: boolean, startDate: Date, endDate: Date, createdAt: Date, repositoryFields: RepositoryFieldEntity[], team: ProjectMemberEntity[], taskBoardLinks: ProjectTboardEntity[], documentLinks: DocumentLinkFieldEntity[]) {
+  constructor(id: string, name: string, description: string, inProgress: boolean, startDate: Date, endDate: Date, createdAt: Date, repositoryFields: RepositoryFieldEntity[], team: ProjectMemberEntity[], taskBoardLinks: ProjectTboardEntity[], documentLinks: DocumentLinkFieldEntity[], customFields: CustomFieldEntity[]) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -29,5 +31,6 @@ export class ProjectResponseDto {
     this.team = team;
     this.taskBoardLinks = taskBoardLinks;
     this.documentLinks = documentLinks;
+    this.customFields = customFields;
   }
 }

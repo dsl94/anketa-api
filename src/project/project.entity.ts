@@ -12,6 +12,7 @@ import { RepositoryFieldEntity } from "./sub-entity/repository-field.entity";
 import { ProjectMemberEntity } from "./sub-entity/project-member.entity";
 import { ProjectTboardEntity } from "./sub-entity/project-tboard.entity";
 import { DocumentLinkFieldEntity } from "./sub-entity/document-link-field.entity";
+import { CustomFieldEntity } from "./sub-entity/custom-field.entity";
 
 @Entity()
 export class Project {
@@ -43,4 +44,6 @@ export class Project {
   taskBoardLinks: ProjectTboardEntity[];
   @Column({type: 'jsonb', nullable: true})
   documentLinks: DocumentLinkFieldEntity[];
+  @Column({type: 'jsonb', nullable: true})
+  customFields: CustomFieldEntity[];
 }

@@ -57,7 +57,8 @@ export class ProjectService {
       project.repositoryFields,
       project.team,
       project.taskBoardLinks,
-      project.documentLinks
+      project.documentLinks,
+      project.customFields,
     );
   }
 }
