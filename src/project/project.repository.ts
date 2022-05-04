@@ -12,7 +12,7 @@ import { User } from "../auth/user.entity";
 @EntityRepository(Project)
 export class ProjectRepository extends Repository<Project> {
   async createProject(createDto: CreateProjectDto, user: User): Promise<void> {
-    const { name, description, inProgress, startDate, endDate, repositoryFields, team, taskBoardLinks } = createDto;
+    const { name, description, inProgress, startDate, endDate, repositoryFields, team, taskBoardLinks, documentLinks } = createDto;
 
     const project = this.create({
       name,
@@ -23,7 +23,8 @@ export class ProjectRepository extends Repository<Project> {
       owner: user,
       repositoryFields,
       team,
-      taskBoardLinks
+      taskBoardLinks,
+      documentLinks
     });
 
     try {
@@ -34,7 +35,7 @@ export class ProjectRepository extends Repository<Project> {
   }
 
   async updateProject(id: string, createDto: CreateProjectDto, user: User): Promise<void> {
-    const { name, description, inProgress, startDate, endDate, repositoryFields, team, taskBoardLinks } = createDto;
+    const { name, description, inProgress, startDate, endDate, repositoryFields, team, taskBoardLinks, documentLinks } = createDto;
 
     const project = await this.findOne(id);
 
@@ -51,6 +52,7 @@ export class ProjectRepository extends Repository<Project> {
       project.repositoryFields = repositoryFields;
       project.team = team;
       project.taskBoardLinks = taskBoardLinks;
+      project.documentLinks = documentLinks;
 
       try {
         await this.save(project);

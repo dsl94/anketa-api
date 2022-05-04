@@ -3,6 +3,7 @@ import { Type } from "class-transformer";
 import { RepositoryFieldEntity } from "../sub-entity/repository-field.entity";
 import { ProjectMemberEntity } from "../sub-entity/project-member.entity";
 import { ProjectTboardEntity } from "../sub-entity/project-tboard.entity";
+import { DocumentLinkFieldEntity } from "../sub-entity/document-link-field.entity";
 
 export class CreateProjectDto {
   @IsString()
@@ -21,4 +22,5 @@ export class CreateProjectDto {
   repositoryFields: RepositoryFieldEntity[];
   team: ProjectMemberEntity[];
   taskBoardLinks: ProjectTboardEntity[];
+  documentLinks: DocumentLinkFieldEntity[];
 }
