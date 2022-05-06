@@ -1,9 +1,8 @@
-import { RepositoryFieldEntity } from "../sub-entity/repository-field.entity";
-import { ProjectMemberEntity } from "../sub-entity/project-member.entity";
-import { ProjectTboardEntity } from "../sub-entity/project-tboard.entity";
-import { DocumentLinkFieldEntity } from "../sub-entity/document-link-field.entity";
-import { doc } from "prettier";
-import { CustomFieldEntity } from "../sub-entity/custom-field.entity";
+import { RepositoryFieldEntity } from "../sub-entity/repository-field.subentity";
+import { ProjectMemberEntity } from "../sub-entity/project-member.subentity";
+import { ProjectTboardEntity } from "../sub-entity/project-tboard.subentity";
+import { DocumentLinkFieldEntity } from "../sub-entity/document-link-field.subentity";
+import { CustomFieldEntity } from "../sub-entity/custom-field.subentity";
 
 export class ProjectResponseDto {
   id: string;
