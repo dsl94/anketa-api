@@ -40,7 +40,6 @@ export class AuthService {
       return new LoginResponseDto(
         accessToken,
         [user.role],
-        user.accountType,
         user.name
       )
     } else {

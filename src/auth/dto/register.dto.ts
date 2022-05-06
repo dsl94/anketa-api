@@ -1,5 +1,4 @@
 import { IsEnum, IsString } from "class-validator";
-import { AccountTypeEnum } from "../account-type.enum";
 
 export class RegisterDto {
   @IsString()
@@ -8,6 +7,4 @@ export class RegisterDto {
   password: string;
   @IsString()
   name: string;
-  @IsEnum(AccountTypeEnum)
-  accountType: AccountTypeEnum
 }
