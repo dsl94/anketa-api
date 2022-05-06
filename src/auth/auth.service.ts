@@ -43,7 +43,7 @@ export class AuthService {
         user.name
       )
     } else {
-      throw new UnauthorizedException("Please check your login credentials");
+      throw new UnauthorizedException("Podaci nisu ispravni");
     }
   }
 
@@ -65,10 +65,10 @@ export class AuthService {
         await this.userRepository.updatePassword(user, newPassword);
         await this.tokenRepository.remove(tokenEntity);
       } else {
-        throw new BadRequestException("Token has expired");
+        throw new BadRequestException("Token je istekao, zatražite ponovo reset lozinke");
       }
     } else {
-      throw new NotFoundException("Token not found");
+      throw new NotFoundException("Token nije pronađen");
     }
   }
 }

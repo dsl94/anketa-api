@@ -23,6 +23,9 @@ export class UserService {
   async getAllUsers(): Promise<AdminUserResponseDto[]> {
     let users = await this.userRepository.find();
     let res: AdminUserResponseDto[] = [];
+    users.forEach(user => {
+      res.push(this.mapToAdminResponse(user));
+    })
     return res;
   }
 
@@ -46,10 +49,10 @@ export class UserService {
     const {currentPassword, newPassword, repeatPassword} = dto;
     // validation
     if (!await bcrypt.compare(currentPassword, user.password)) {
-      throw new BadRequestException("Current password is not correct")
+      throw new BadRequestException("Trenutna lozinka nije ispravna")
     }
     if (newPassword !== repeatPassword) {
-      throw new BadRequestException("New and repeat password must match")
+      throw new BadRequestException("Nova i ponovljena lozinka moraju da budu iste")
     }
 
     await this.userRepository.updatePassword(user, newPassword);
