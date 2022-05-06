@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { configValidationSchema } from "./config.schema";
 import { MailModule } from './mail/mail.module';
 import { getConnectionOptions } from "typeorm";
+import { GroupModule } from './group/group.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { getConnectionOptions } from "typeorm";
       }),
   }),
   AuthModule,
-  MailModule,],
+  MailModule,
+  GroupModule,],
   controllers: [AppController],
   providers: [AppService],
 })
