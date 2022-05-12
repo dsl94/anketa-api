@@ -51,12 +51,9 @@ export class GroupService {
       throw new NotFoundException("Grupa ne postoji");
     }
 
-    console.log(userId)
     group.users = group.users.filter(user => {
       return user.id !== userId;
     });
-
-    console.log(group);
     await this.groupRepository.save(group);
   }
 
