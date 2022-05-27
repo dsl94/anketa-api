@@ -8,6 +8,7 @@ import { configValidationSchema } from "./config.schema";
 import { MailModule } from './mail/mail.module';
 import { getConnectionOptions } from "typeorm";
 import { GroupModule } from './group/group.module';
+import { SurveyModule } from './survey/survey.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { GroupModule } from './group/group.module';
   }),
   AuthModule,
   MailModule,
-  GroupModule,],
+  GroupModule,
+  SurveyModule,],
   controllers: [AppController],
   providers: [AppService],
 })
