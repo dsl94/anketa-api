@@ -9,6 +9,7 @@ import { GroupTableDto } from "./dto/group-table.dto";
 import { GroupDetailsDto } from "./dto/group-details.dto";
 import { SimpleUserDto } from "../auth/dto/simple-user.dto";
 import { AddUsersDto } from "./dto/add-users.dto";
+import { SimpleGroupDto } from "./dto/simple-group.dto";
 
 @Injectable()
 export class GroupService {
@@ -62,6 +63,19 @@ export class GroupService {
     const res: GroupTableDto[] = [];
     for (let group of groups) {
       const dto = new GroupTableDto(group.id, group.name, group.users != undefined ? group.users.length : 0);
+      res.push(dto);
+    }
+
+    return res;
+  }
+
+  async getAllGroupsSimple(): Promise<SimpleGroupDto[]> {
+    const groups = await this.groupRepository.find();
+    const res: SimpleGroupDto[] = [];
+    for (let group of groups) {
+      const dto = new SimpleGroupDto();
+      dto.id = group.id;
+      dto.name = group.name;
       res.push(dto);
     }
 

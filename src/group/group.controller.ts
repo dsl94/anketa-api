@@ -17,6 +17,7 @@ import { CreateGroupDto } from "./dto/create-group.dto";
 import { GroupTableDto } from "./dto/group-table.dto";
 import { GroupDetailsDto } from "./dto/group-details.dto";
 import { AddUsersDto } from "./dto/add-users.dto";
+import { SimpleGroupDto } from "./dto/simple-group.dto";
 
 @Controller('group')
 @UseGuards(AuthGuard())
@@ -54,6 +55,12 @@ export class GroupController {
   @UseGuards(RoleGuard(RoleEnum.ADMIN))
   getAllGroups(): Promise<GroupTableDto[]> {
     return this.groupService.getAllGroups();
+  }
+
+  @Get('/simple/all')
+  @UseGuards(RoleGuard(RoleEnum.ADMIN))
+  getAllGroupsSimple(): Promise<SimpleGroupDto[]> {
+    return this.groupService.getAllGroupsSimple();
   }
 
   @Get('/:id')
