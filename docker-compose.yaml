@@ -3,10 +3,10 @@ networks:
   default:
     name: pc
 services:
-  pc-api:
+  anketa-api:
     image: anketaapi
-    container_name: pc-api
-    hostname: pc-api
+    container_name: anketa-api
+    hostname: anketa-api
     expose:
       - 3001
     ports:
@@ -18,7 +18,7 @@ services:
       DB_PASSWORD: xx3Uk75qf1Zi3R7_APXiQJaHRTYct6HK
       DB_DATABASE: yuujcnqk
       JWT_SECRET: s3cr3t
-  pc-ui:
+  anketa-ui:
     image: anketaui
     restart: always
     expose:
