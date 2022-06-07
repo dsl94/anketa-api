@@ -14,6 +14,7 @@ RUN npm run build
 FROM node:16-alpine
 WORKDIR /app
 COPY --from=builder /app ./
-EXPOSE 3000
+COPY --from=builder /app/dist ./dist
+EXPOSE 3001
 CMD ["npm", "run", "start:prod"]
 
