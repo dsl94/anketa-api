@@ -1,5 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../auth/user.entity";
+import { Survey } from "../survey/survey.entity";
 
 @Entity()
 export class Group {
@@ -7,7 +8,9 @@ export class Group {
   id: string;
   @Column()
   name: string;
-  @ManyToMany(() => User, {eager: true})
+  @ManyToMany(() => User, (user: User) => user.groups, {eager: true})
   @JoinTable()
   users: User[];
+  @ManyToMany(() => Survey, (survey: Survey) => survey.groups)
+  surveys: Survey[];
 }

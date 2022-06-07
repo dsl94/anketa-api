@@ -12,12 +12,13 @@ import { AuthGuard } from "@nestjs/passport";
 import { SurveyService } from "./survey.service";
 import RoleGuard from "../auth/role.guard";
 import { RoleEnum } from "../auth/role.enum";
-import { CreateGroupDto } from "../group/dto/create-group.dto";
-import { Group } from "../group/group.entity";
-import { GroupTableDto } from "../group/dto/group-table.dto";
 import { CreateSurveyDto } from "./dto/create-survey.dto";
 import { Survey } from "./survey.entity";
 import { SurveyTableDto } from "./dto/survey-table.dto";
+import { GetUser } from "../auth/get-user.decorator";
+import { User } from "../auth/user.entity";
+import { SurveyListForUserDto } from "./dto/survey-list-for-user.dto";
+import { SingleUserSurveyDto } from "./dto/single-user-survey.dto";
 
 @Controller('survey')
 @UseGuards(AuthGuard())
@@ -43,5 +44,29 @@ export class SurveyController {
   @UseGuards(RoleGuard(RoleEnum.ADMIN))
   removeGroup(@Param('id') id: string): Promise<void> {
     return this.surveyService.removeSurvey(id);
+  }
+
+  @Get('/for-user/all')
+  @UseGuards(RoleGuard(RoleEnum.USER))
+  getForUser(@GetUser() user: User): Promise<SurveyListForUserDto[]> {
+    return this.surveyService.getSurveysForUser(user);
+  }
+
+  @Get('/for-user/one/:id')
+  @UseGuards(RoleGuard(RoleEnum.USER))
+  getSingleForSpecificUser(@GetUser() user: User, @Param('id') id: string): Promise<SingleUserSurveyDto> {
+    return this.surveyService.getSurveyForSpecificUser(user, id);
+  }
+
+  @Post('/for-user/one/:id')
+  @UseGuards(RoleGuard(RoleEnum.USER))
+  surveyAnswer(@GetUser() user: User, @Param('id') id: string, @Body() dto: SingleUserSurveyDto): Promise<void> {
+    return this.surveyService.saveAnswer(user, id, dto);
+  }
+
+  @Get('/result/one/:id')
+  @UseGuards(RoleGuard(RoleEnum.ADMIN))
+  surveyResult(@Param('id') id: string): Promise<Survey> {
+    return this.surveyService.getById(id);
   }
 }
