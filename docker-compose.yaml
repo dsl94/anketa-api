@@ -5,6 +5,7 @@ networks:
 services:
   anketa-api:
     image: anketaapi
+    restart: always
     container_name: anketa-api
     hostname: anketa-api
     expose:

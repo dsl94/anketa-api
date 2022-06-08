@@ -76,4 +76,10 @@ export class SurveyController {
   surveyResult(@Param('id') id: string): Promise<Survey> {
     return this.surveyService.getById(id);
   }
+
+  @Get('/result-user/one/:id')
+  @UseGuards(RoleGuard(RoleEnum.USER))
+  surveyResultUser(@Param('id') id: string): Promise<Survey> {
+    return this.surveyService.getById(id);
+  }
 }
