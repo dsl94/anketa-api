@@ -8,6 +8,7 @@ import {
 import { User } from "../auth/user.entity";
 import { Group } from "./group.entity";
 import { CreateGroupDto } from "./dto/create-group.dto";
+import { ToaddSubentity } from "./toadd.subentity";
 
 @EntityRepository(Group)
 export class GroupRepository extends Repository<Group> {
@@ -16,6 +17,7 @@ export class GroupRepository extends Repository<Group> {
 
     const group = this.create({
       name,
+      toAdd: new ToaddSubentity()
     });
 
     try {

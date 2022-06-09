@@ -10,6 +10,7 @@ import { GroupDetailsDto } from "./dto/group-details.dto";
 import { SimpleUserDto } from "../auth/dto/simple-user.dto";
 import { AddUsersDto } from "./dto/add-users.dto";
 import { SimpleGroupDto } from "./dto/simple-group.dto";
+import { ToaddSubentity } from "./toadd.subentity";
 
 @Injectable()
 export class GroupService {
@@ -25,6 +26,11 @@ export class GroupService {
       const user = await this.userRepository.findOne({email});
       if (user) {
         users.push(user);
+      } else {
+        if (group.toAdd === undefined || group.toAdd === null) {
+          group.toAdd = new ToaddSubentity();
+        }
+        group.toAdd.emails.push(email);
       }
     }
     group.users = users;
@@ -37,6 +43,11 @@ export class GroupService {
       const user = await this.userRepository.findOne({email});
       if (user) {
         group.users.push(user);
+      } else {
+        if (group.toAdd === undefined || group.toAdd === null) {
+          group.toAdd = new ToaddSubentity();
+        }
+        group.toAdd.emails.push(email);
       }
     }
     await this.groupRepository.save(group);
@@ -94,7 +105,8 @@ export class GroupService {
       group.id,
       group.name,
       group.users != undefined ? group.users.length : 0,
-      users
+      users,
+      group.toAdd
     );
   }
 }

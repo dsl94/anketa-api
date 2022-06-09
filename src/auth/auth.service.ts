@@ -11,6 +11,7 @@ import { MailService } from "../mail/mail.service";
 import { TokenRepository } from "./token.repository";
 import { ForgotPasswordDto } from "./dto/forgot-password.dto";
 import { ChangePasswordDto } from "./dto/change-password.dto";
+import { GroupRepository } from "../group/group.repository";
 
 @Injectable()
 export class AuthService {
@@ -18,12 +19,23 @@ export class AuthService {
   constructor(
     @InjectRepository(UserRepository) private userRepository: UserRepository,
     @InjectRepository(TokenRepository) private tokenRepository: TokenRepository,
+    @InjectRepository(GroupRepository) private groupRepository: GroupRepository,
     private jwtService: JwtService,
     private mailService: MailService) {
   }
 
   async signUp(registerDto: RegisterDto): Promise<void> {
      const user = await this.userRepository.createUser(registerDto)
+      const groups = await this.groupRepository.find();
+    for (let group of groups) {
+      if (group.toAdd !== undefined && group.toAdd !== null) {
+        if (group.toAdd.emails.includes(registerDto.email)) {
+          group.users.push(user);
+          group.toAdd.emails = group.toAdd.emails.filter(e => e !== registerDto.email);
+        }
+        await this.groupRepository.save(group);
+      }
+    }
      this.mailService.sendUserRegisterMail(user);
      return;
   }

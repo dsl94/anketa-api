@@ -22,7 +22,7 @@ export class MailService {
   }
 
   async sendForgotPasswordMail(user: User, token: string) {
-    const url = `productcentral.io/${token}` ;
+    const url = `evaluacija.xyz/reset-password?token=${token}` ;
 
     await this.mailerService.sendMail({
       to: user.email,

@@ -13,6 +13,7 @@ import { UserService } from "./user.service";
 import { ProfileController } from "./profile.controller";
 import { UserController } from "./user.controller";
 import { GetUser } from "./get-user.decorator";
+import { GroupRepository } from "../group/group.repository";
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { GetUser } from "./get-user.decorator";
       },
     ),
     MailModule,
-    TypeOrmModule.forFeature([UserRepository, TokenRepository]),
+    TypeOrmModule.forFeature([UserRepository, TokenRepository, GroupRepository]),
   ],
   providers: [AuthService, JwtStrategy, UserService],
   controllers: [AuthController, ProfileController, UserController],
