@@ -20,7 +20,7 @@ services:
       DB_DATABASE: yuujcnqk
       JWT_SECRET: s3cr3t
   anketa-ui:
-    image: anketaui
+    image: anketa-ui
     restart: always
     expose:
       - 80
