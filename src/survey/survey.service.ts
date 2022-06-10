@@ -125,6 +125,21 @@ export class SurveyService {
               answers.push(answer);
             }
           }
+
+          if (group.toAdd !== undefined && group.toAdd !== null) {
+            for (let userToBe of group.toAdd.emails) {
+              if (user.email !== userToBe) {
+                const toBe = new AnswerUserSubEntity();
+                toBe.id = undefined;
+                toBe.name = userToBe;
+                toBe.email = userToBe;
+                const answer = new QuestionAnswerSubEntity();
+                answer.from = from;
+                answer.to = toBe;
+                answers.push(answer);
+              }
+            }
+          }
         }
       }
       q.answers = answers;
