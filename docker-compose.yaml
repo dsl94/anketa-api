@@ -4,7 +4,7 @@ networks:
     name: pc
 services:
   anketa-api:
-    image: cloud.canister.io:5000/hyh/anketa-ui
+    image: anketaapi
     restart: always
     container_name: anketa-api
     hostname: anketa-api
@@ -20,7 +20,7 @@ services:
       DB_DATABASE: yuujcnqk
       JWT_SECRET: s3cr3t
   anketa-ui:
-    image: anketa-ui
+    image: cloud.canister.io:5000/hyh/anketa-ui
     restart: always
     expose:
       - 80
