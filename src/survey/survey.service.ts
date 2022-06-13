@@ -15,6 +15,7 @@ import { QuestionAnswerSubEntity } from "./sub-entity/question-answer.sub-entity
 import { UserRepository } from "../auth/user.repository";
 import { AnsweredFromSubentity } from "./sub-entity/answeredFrom.subentity";
 import { AddGroupsDto } from "./dto/add-groups.dto";
+import { ResponseDto } from "./dto/response.dto";
 
 @Injectable()
 export class SurveyService {
@@ -170,6 +171,28 @@ export class SurveyService {
     survey.answeredFrom.ids.push(user.id);
 
     await this.surveyRepository.save(survey);
+  }
+
+  async setResponse(surveyId: string, user: User, res: ResponseDto): Promise<void> {
+    const survey = await this.surveyRepository.findOne(surveyId);
+    if (!survey) {
+      throw new NotFoundException("Survey not found");
+    }
+
+    for (let question of survey.questions) {
+      if (question.question === res.question) {
+        for (let answer of question.answers) {
+          if (answer.to.email === user.email && answer.from.email === res.from) {
+            answer.responded = true;
+            answer.response = res.response;
+            await this.surveyRepository.save(survey);
+            return;
+          }
+        }
+      }
+    }
+
+    return;
   }
 
   private userInGroup(user: User, group: Group): boolean {

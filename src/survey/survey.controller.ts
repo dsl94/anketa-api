@@ -20,6 +20,7 @@ import { User } from "../auth/user.entity";
 import { SurveyListForUserDto } from "./dto/survey-list-for-user.dto";
 import { SingleUserSurveyDto } from "./dto/single-user-survey.dto";
 import { AddGroupsDto } from "./dto/add-groups.dto";
+import { ResponseDto } from "./dto/response.dto";
 
 @Controller('survey')
 @UseGuards(AuthGuard())
@@ -63,6 +64,12 @@ export class SurveyController {
   @UseGuards(RoleGuard(RoleEnum.USER))
   surveyAnswer(@GetUser() user: User, @Param('id') id: string, @Body() dto: SingleUserSurveyDto): Promise<void> {
     return this.surveyService.saveAnswer(user, id, dto);
+  }
+
+  @Post('/for-user/response/:id')
+  @UseGuards(RoleGuard(RoleEnum.USER))
+  addResponse(@GetUser() user: User, @Param('id') id: string, @Body() dto: ResponseDto): Promise<void> {
+    return this.surveyService.setResponse(id, user, dto);
   }
 
   @Post('/groups/add/:id')

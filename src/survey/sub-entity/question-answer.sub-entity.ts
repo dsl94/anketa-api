@@ -4,4 +4,6 @@ export class QuestionAnswerSubEntity {
   from: AnswerUserSubEntity;
   to: AnswerUserSubEntity;
   answer: string;
+  response: string;
+  responded:boolean = false;
 }
