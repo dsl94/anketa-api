@@ -4,7 +4,7 @@ networks:
     name: pc
 services:
   anketa-api:
-    image: anketaapi
+    image: cloud.canister.io:5000/hyh/anketa-ui
     restart: always
     container_name: anketa-api
     hostname: anketa-api
