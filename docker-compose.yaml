@@ -13,10 +13,10 @@ services:
     ports:
       - 3001:3001
     environment:
-      DB_HOST: pg-360883fe-intisiavirtual.h.aivencloud.com
-      DB_PORT: 13820
-      DB_USERNAME: avnadmin
-      DB_PASSWORD: AVNS_4mP0o456axcGGjyhVOY
+      DB_HOST: 54.38.159.109
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: Cc883232d
       DB_DATABASE: anketa
       JWT_SECRET: s3cr3t
   anketa-ui:
